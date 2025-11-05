@@ -27,12 +27,12 @@
 class s4s_mainBoard
 {
 public:
-    s4s_mainBoard(uint8_t addr = 0x05);
+    s4s_mainBoard(uint8_t addr = 0x0F);
     ~s4s_mainBoard();
 
 public:
     void begin(TwoWire *wire) { _wire=wire;}
-    void begin(int sda = -1, int scl = -1)
+    void begin(int sda = 42, int scl = 41)
     {
 #if defined(__AVR__) || defined(ARDUINO_ARCH_AVR)
         Wire.begin();
@@ -98,42 +98,43 @@ public:
 
     /**
      * @description: 设置编码电机模式
-     * @param {uint8_t} id 编码电机ID 0~3
+     * @param {uint8_t} id 编码电机ID 0 ~ 3
      * @param {uint8_t} mode 模式 0: 直流电机，1：位置控制，2：速度控制
      * @return int 0: success, other: fail
      */    
     int encoder_motor_set_mode(uint8_t id, uint8_t mode);
     /**
      * @description: 设置编码电机 功率/速度
-     * @param {uint8_t} id 编码电机ID 0~3
-     * @param {int16_t} power 功率 -1000~1000
+     * @param {uint8_t} id 编码电机ID 0 ~ 3
+     * @param {int16_t} power 功率 -1000 ~ 1000
      * @return int 0: success, other: fail
      */
     int encoder_motor_set_power(uint8_t id, int16_t power);
     /**
      * @description: 设置编码电机需要转动到的 位置
-     * @param {uint8_t} id 编码电机ID 0~3
-     * @param {int32_t} position 位置 -2147483648~2147483647
+     * @param {uint8_t} id 编码电机ID 0 ~ 3
+     * @param {int32_t} position 位置 -2147483648 ~ 2147483647
      * @return int 0: success, other: fail
      */
     int encoder_motor_set_position(uint8_t id, int32_t position);
     /**
      * @description: 获取编码器值
-     * @param {uint8_t} id 编码电机ID 0~3
-     * @param {int32_t} *position 位置 -2147483648~2147483647
-     * @return int 0: success, other: fail
+     * @param {uint8_t} id 编码电机ID 0 ~ 3
+     * @return int32_t   位置 -2147483648 ~ 2147483647
      */
-    int encoder_motor_get_position(uint8_t id, int32_t *position);
+    int32_t encoder_motor_get_position(uint8_t id);
     /**
      * @description: 设置编码电机位置PID参数
-     * @param {uint8_t} id 编码电机ID 0~3
-     * @param {int32_t} kp 位置PID参数P -128~127
-     * @param {int32_t} ki 位置PID参数I -128~127
-     * @param {int32_t} kd 位置PID参数D -128~127
+     * @param {uint8_t} id 编码电机ID 0 ~ 3
+     * @param {int32_t} kp 位置PID参数P -128 ~ 127
+     * @param {int32_t} ki 位置PID参数I -128 ~ 127
+     * @param {int32_t} kd 位置PID参数D -128 ~ 127
      * @return int 0: success, other: fail
      */
     int encoder_motor_set_position_pid(uint8_t id, int8_t kp, int8_t ki, int8_t kd);
     int encoder_motor_set_velocity_pid(uint8_t id, int8_t kp, int8_t ki, int8_t kd);
+
+    uint8_t voice_get_state(void);
 
 protected:
     virtual uint8_t writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
