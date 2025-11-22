@@ -27,17 +27,28 @@
 class s4s_mainBoard
 {
 public:
-    s4s_mainBoard(uint8_t addr = 0x0F);
+    s4s_mainBoard();
     ~s4s_mainBoard();
-
+public:
+    enum COLOR_TYPE
+    {
+        COLOR_NONE=0,
+        COLOR_RED,
+        COLOR_GREEN,
+        COLOR_BLUE,
+        COLOR_YELLOW,
+        COLOR_PURPLE = COLOR_YELLOW + 2,
+    };
 public:
     void begin(TwoWire *wire) { _wire=wire;}
-    void begin(int sda = 42, int scl = 41)
+    void begin(void)
     {
 #if defined(__AVR__) || defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_RENESAS)
         Wire.begin();
 #else
-        Wire.begin(sda, scl);
+        Wire.begin(42, 41);
+        Wire1.begin(1, 2);
+        _wire2 = &Wire1;
 #endif
         _wire = &Wire;
     }
@@ -136,12 +147,34 @@ public:
 
     uint8_t voice_get_state(void);
 
+    /**
+     * @description: Get the distance of the ultrasonic wave
+     * @return {*} The unit is centimeters
+     */    
+    uint16_t ultr_get_distance(void);
+    void ultr_set_color(uint8_t light, uint8_t color[3]);
+    void ultr_set_color(uint8_t light, uint8_t r, uint8_t g, uint8_t b);
+
+    void gray_grayStudy(void);
+    void gray_binaryStudy(void);
+    void gray_colorStudy(enum COLOR_TYPE colorType);
+    void gray_clearColor(void);
+    void gray_getGrayData(uint8_t data[4]);
+    void gray_getColorData(uint8_t data[4]);
+    void gray_getBlack(uint8_t data[4]);
+    void gray_getPhotosensitive(uint8_t data[4]);
+
 protected:
+    virtual uint8_t writeData(uint8_t dev_addr, uint8_t *data, uint16_t len);
+    virtual uint8_t readData(uint8_t dev_addr, uint8_t *data, uint16_t len);
     virtual uint8_t writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
     virtual uint8_t readReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
     virtual uint8_t isOnline(uint8_t dev_addr);
 
 private:
-    const uint8_t DEV_ADDR;
-    TwoWire *_wire = NULL;
+    const uint8_t MAINBOARD_ADDR = 0x0F;
+    const uint8_t ULTR_ADDR = 0x57;
+    const uint8_t GYRO_ADDR = 0x6F;
+    TwoWire *_wire  = NULL;
+    TwoWire *_wire2 = NULL;
 };
