@@ -12,13 +12,13 @@
         memcpy(dst, src, len * sizeof(type));   \
     } while (0)
 
-static const uint8_t CHARGING_REG        = 0x00; // 充电管理
-static const uint8_t AMBIENT_LIGHT_REG   = 0x05; // 氛围灯
-static const uint8_t RTC_REG             = 0x0A; // RTC 时间
-static const uint8_t SERVO_REG           = 0x0F; // 舵机
-static const uint8_t GYROSCOPE_REG       = 0x14; // 陀螺仪
-static const uint8_t VOICE_REG           = 0x1E; // 语音模块
-static const uint8_t ENCODER_MOTOR_REG[] = {0x50, 0x5A, 0x64, 0x6E}; // 编码电机
+static const uint8_t CHARGING_REG        = 0x00; // Charging Management 充电管理
+static const uint8_t AMBIENT_LIGHT_REG   = 0x05; // Ambient light 氛围灯
+static const uint8_t RTC_REG             = 0x0A; // RTC 
+static const uint8_t SERVO_REG           = 0x0F; // Servo 舵机
+static const uint8_t GYROSCOPE_REG       = 0x14; // Gyroscope 陀螺仪
+static const uint8_t VOICE_REG           = 0x1E; // Voice Module 语音模块
+static const uint8_t ENCODER_MOTOR_REG[] = {0x50, 0x5A, 0x64, 0x6E}; // Encoder motor 编码电机
 
 
 /*******************
