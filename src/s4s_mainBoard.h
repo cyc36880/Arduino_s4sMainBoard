@@ -28,7 +28,7 @@ class s4s_mainBoard
 {
 public:
     s4s_mainBoard();
-    ~s4s_mainBoard();
+     ~ s4s_mainBoard();
 public:
     enum COLOR_TYPE
     {
@@ -55,15 +55,15 @@ public:
 
     /**
     * @description: Get battery level
-    * @param charging_voltage Battery level 0~100
+    * @param charging_voltage Battery level 0 ~ 100
     * @return int 0: success, other: fail
     */
     int charging_get_state(uint8_t * charging_voltage); 
 
     /**
     * @description: Set the ambient light status
-    * @param light Brightness 0~255; -1 means do not change
-    * @param color Color array [r, g, b] 0~255; NULL means do not change
+    * @param light Brightness 0 ~ 255; -1 means do not change
+    * @param color Color array [r, g, b] 0 ~ 255; NULL means do not change
     * @return int 0: success, other: fail
     */
     int ambient_light_set_state(int light, uint8_t color[3]);
@@ -71,9 +71,9 @@ public:
 
     /**
     * @description: Set RTC time
-    * @param year Year 0~99
-    * @param month Month 1~12
-    * @param day Day 1~31
+    * @param year Year 0 ~ 99
+    * @param month Month 1 ~ 12
+    * @param day Day 1 ~ 31
     * @return int 0: success, other: fail
     */
     int rtc_set_data(uint8_t year, uint8_t month, uint8_t day);
@@ -83,8 +83,8 @@ public:
 
     /**
     * @description: Set the servo angle
-    * @param servo_id Servo ID 0~1
-    * @param angle Angle 0~180
+    * @param servo_id Servo ID 0 ~ 1
+    * @param angle Angle 0 ~ 180
     * @return int 0: success, other: fail
     */
     int servo_set_angle(uint8_t id, uint8_t angle);
@@ -115,34 +115,34 @@ public:
 
     /**
      * @description: Get the rotational angle of the encoded motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param angle Rotational angle
      * @return int 0: success, other: fail
      */    
     int encoder_motor_get_angle(uint8_t id, int32_t * angle);
     /**
      * @description: Get the speed of the encoded motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param speed Speed
      * @return int 0: success, other: fail
      */    
     int encoder_motor_get_speed(uint8_t id, int16_t * speed);
     /**
      * @description: Get the current power of the encoded motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param power Current power
      * @return int 0: success, other: fail
      */    
     int encoder_motor_get_power(uint8_t id, uint16_t * power);
     /**
      * @description: Reset the rotation angle of the encoder motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @return int 0: success, other: fail
      */    
     int encoder_motor_reset_angle(uint8_t id);
     /**
      * @description: Set the motion commands for the encoded motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param action Command
      *  @note 
      *      0:stop
@@ -156,35 +156,35 @@ public:
     int encoder_motor_set_action(uint8_t id, uint8_t action);
     /**
      * @description: Set the motion speed of the encoder motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param speed Speed
      * @return int 0: success, other: fail
      */    
     int encoder_motor_set_speed(uint8_t id, uint16_t speed);
     /**
      * @description: Set the power of the encoder motor
-     * @param id  Encoder motor ID 0~3
-     * @param power Power 0~100
+     * @param id  Encoder motor ID 0 ~ 3
+     * @param power Power 0 ~ 100
      * @return int 0: success, other: fail
      */ 
     int encoder_motor_set_power(uint8_t id, uint8_t power);
     /**
      * @description: Set the ring of the encoder motor
-     * @param id  Encoder motor ID 0~3
-     * @param ring Ring 0~65535
+     * @param id  Encoder motor ID 0 ~ 3
+     * @param ring Ring 0 ~ 65535
      * @return int 0: success, other: fail
      */  
     int encoder_motor_set_ring(uint8_t id, uint16_t ring);
     /**
      * @description: Set the relative angle for the encoder motor operation
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param relativeAngle Relative angle
      * @return int 0: success, other: fail
      */    
     int encoder_motor_set_relative_angle(uint8_t id, uint16_t relativeAngle);
     /**
      * @description: Set the running duration of the encoder motor
-     * @param id  Encoder motor ID 0~3
+     * @param id  Encoder motor ID 0 ~ 3
      * @param runTime Running duration, The unit is seconds
      * @return int 0: success, other: fail
      */
@@ -203,8 +203,8 @@ public:
     int encoder_motor_pair_set_action(uint8_t action);
     /**
      * @description: Set the IDs for the left and right motor pairs
-     * @param l_id Left motor ID 0~3
-     * @param r_id Right motor ID 0~3
+     * @param l_id Left motor ID 0 ~ 3
+     * @param r_id Right motor ID 0 ~ 3
      * @return int 0: success, other: fail
      */    
     int encoder_motor_pair_set_group(uint8_t l_id, uint8_t r_id);
@@ -217,7 +217,7 @@ public:
     int encoder_motor_pair_set_run_speed(uint16_t l_speed, uint16_t r_speed);
     /**
      * @description: Set motor for motion time
-     * @param runTime Running time 0~65535, unit: ms
+     * @param runTime Running time 0 ~ 65535, unit: ms
      * @return int 0: success, other: fail
      */    
     int enmcoder_motor_pair_set_run_time(uint16_t runTime);
