@@ -1,5 +1,5 @@
 /**
- * Encoder Motor Position Loop Control
+ * Control how many degrees the motor rotates
  */
 #include "s4s_mainBoard.h"
 #include "stdio.h"
@@ -9,18 +9,17 @@ s4s_mainBoard mainBoard;
 void setup()
 {
     mainBoard.begin();
-
-    // Set id 0 encoder motor mode
-    mainBoard.encoder_motor_set_mode(0, 1);
 }
 
 void loop()
 {
-    // Set id 0 encoder motor position
-    mainBoard.encoder_motor_set_position(0, 200);
+    // Rotate forward 200 degrees
+    mainBoard.encoder_motor_set_relative_angle(0, 200);
+    mainBoard.encoder_motor_set_action(0, 7);
     delay(2000);
 
-    // Set id 0 encoder motor position
-    mainBoard.encoder_motor_set_position(0, 0);
+    // Invert 200 degrees
+    mainBoard.encoder_motor_set_relative_angle(0, 0);
+    mainBoard.encoder_motor_set_action(0, 8);
     delay(2000);
 }
