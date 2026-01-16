@@ -452,7 +452,7 @@ int s4s_mainBoard::encoder_motor_pair_set_group(uint8_t l_id, uint8_t r_id)
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_paor_set_run_speed(uint16_t l_speed, uint16_t r_speed)
+int s4s_mainBoard::encoder_motor_pair_set_run_speed(uint16_t l_speed, uint16_t r_speed)
 {
     int ret = 0;
     uint8_t data[4] = {0};

@@ -214,7 +214,7 @@ public:
      * @param r_speed Right motor speed
      * @return int 0: success, other: fail
      */    
-    int encoder_motor_paor_set_run_speed(uint16_t l_speed, uint16_t r_speed);
+    int encoder_motor_pair_set_run_speed(uint16_t l_speed, uint16_t r_speed);
     /**
      * @description: Set motor for motion time
      * @param runTime Running time 0~65535, unit: ms
