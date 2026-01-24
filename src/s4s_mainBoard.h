@@ -83,11 +83,19 @@ public:
 
     /**
     * @description: Set the servo angle
-    * @param servo_id Servo ID 0 ~ 1
+    * @param id Servo ID 0 ~ 1
     * @param angle Angle 0 ~ 180
     * @return int 0: success, other: fail
     */
     int servo_set_angle(uint8_t id, uint8_t angle);
+
+    /**
+    * @description: Set the continuous servo angle
+    * @param id    Servo ID 0 ~ 1
+    * @param speed speed -100 ~ 180
+    */
+    int continuous_servo_set_speed(uint8_t id, int8_t speed);
+
 
     /**
     * @description: Enable the gyroscope

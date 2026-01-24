@@ -244,6 +244,16 @@ int s4s_mainBoard::servo_set_angle(uint8_t id, uint8_t angle)
     return ret;
 }
 
+int s4s_mainBoard::continuous_servo_set_speed(uint8_t id, int8_t speed)
+{
+    if (id > 1) return -1;
+
+    int ret = 0;
+    uint8_t data[] = {(uint8_t)speed};
+    ret += this->writeReg(MAINBOARD_ADDR, SERVO_REG+2+id, data, 1);
+    return ret;
+}
+
 int s4s_mainBoard::gyro_enable(uint8_t enable)
 {
     int ret = 0;
