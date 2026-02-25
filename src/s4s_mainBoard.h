@@ -54,11 +54,29 @@ public:
     }
 
     /**
-    * @description: Get battery level
-    * @param charging_voltage Battery level 0 ~ 100
-    * @return int 0: success, other: fail
-    */
-    int charging_get_state(uint8_t * charging_voltage); 
+     * @description: Get the internal battery level
+     * @param level 0 ~ 100
+     * @return int 0: success, other: fail
+     */    
+    int power_get_internal_battery_level(uint8_t * level);
+    /**
+     * @description: Get the external battery voltage
+     * @param voltage Battery voltage
+     * @return int 0: success, other: fail
+     */    
+    int power_get_external_battery_voltage(float * voltage);
+    /**
+     * @description: Get the charging status
+     * @param isCharging 1: charging; 0: not charging
+     * @return int 0: success, other: fail
+     */    
+    int power_is_charging(uint8_t * isCharging);
+    /**
+     * @description: Get the charging status
+     * @param isFullyCharged 1: fully charged; 0: not fully charged
+     * @return int 0: success, other: fail
+     */
+    int power_is_fully_charged(uint8_t * isFullyCharged);
 
     /**
     * @description: Set the ambient light status
@@ -95,24 +113,6 @@ public:
     * @param speed speed -100 ~ 180
     */
     int continuous_servo_set_speed(uint8_t id, int8_t speed);
-
-
-    /**
-    * @description: Enable the gyroscope
-    * @param enable 0: disable, 1: enable
-    * @return int 0: success, other: fail
-    */
-    int gyro_enable(uint8_t enable);
-    /**
-    * @description: Set the gyroscope state
-    * @param state State 0: idle, 1: start calibration, 2: reset yaw angle
-    * @return int 0: success, other: fail
-    */
-    int gyro_set_state(uint8_t state);
-    int gyro_get_state(uint8_t * state);
-    int gyro_get_acc(int16_t * accX, int16_t * accY, int16_t * accZ);
-    int gyro_get_gyro(int16_t * gyroX, int16_t * gyroY, int16_t * gyroZ);
-    int gyro_get_angle(int16_t * angleX, int16_t * angleY, int16_t * angleZ);
 
     /**
      * @description: Get voice commands

@@ -16,10 +16,9 @@ static const uint8_t CHARGING_REG           = 0x00; // Charging Management 充�
 static const uint8_t AMBIENT_LIGHT_REG      = 0x05; // Ambient light 氛围灯
 static const uint8_t RTC_REG                = 0x0A; // RTC 
 static const uint8_t SERVO_REG              = 0x0F; // Servo 舵机
-static const uint8_t GYROSCOPE_REG          = 0x14; // Gyroscope 陀螺仪
-static const uint8_t VOICE_REG              = 0x1E; // Voice Module 语音模块
-static const uint8_t ENCODER_MOTOR_REG[]    = {0x50, 0x5A, 0x64, 0x6E}; // Encoder motor 编码电机
-static const uint8_t ENCODER_MOTOR_PAIR_REG = 0x78; // Encoder motor pair 编码电机对
+static const uint8_t VOICE_REG              = 0x14; // Voice Module 语音模块
+static const uint8_t ENCODER_MOTOR_REG[]    = {0x50, 0x5F, 0x6E, 0x7D}; // Encoder motor 编码电机
+static const uint8_t ENCODER_MOTOR_PAIR_REG = 0x8C; // Encoder motor pair 编码电机对
 
 
 /*******************
@@ -162,15 +161,33 @@ s4s_mainBoard::~s4s_mainBoard()
 
 }
 
-int s4s_mainBoard::charging_get_state(uint8_t * charging_voltage)
+int s4s_mainBoard::power_get_internal_battery_level(uint8_t * level)
 {
     int ret = 0;
-    uint8_t data = 0;
-    if (charging_voltage)
-    {
-        ret += this->readReg(MAINBOARD_ADDR, CHARGING_REG + 0, &data, 1);
-        POINTER_SPACE_COPY(uint8_t, charging_voltage, &data, 1);
-    }
+    ret += this->writeReg(MAINBOARD_ADDR, CHARGING_REG + 0, level, 1);
+    return ret;
+}
+
+int s4s_mainBoard::power_get_external_battery_voltage(float * voltage)
+{
+    int ret = 0;
+    uint8_t data = {0};
+    ret += this->readReg(MAINBOARD_ADDR, CHARGING_REG + 1, &data, 1);
+    *voltage = data / 10.0f;
+    return ret;
+}
+
+int s4s_mainBoard::power_is_charging(uint8_t * isCharging)
+{
+    int ret = 0;
+    ret += this->readReg(MAINBOARD_ADDR, CHARGING_REG + 2, isCharging, 1);
+    return ret;
+}
+
+int s4s_mainBoard::power_is_fully_charged(uint8_t * isFullyCharged)
+{
+    int ret = 0;
+    ret += this->readReg(MAINBOARD_ADDR, CHARGING_REG + 3, isFullyCharged, 1);
     return ret;
 }
 
@@ -251,91 +268,6 @@ int s4s_mainBoard::continuous_servo_set_speed(uint8_t id, int8_t speed)
     int ret = 0;
     uint8_t data[] = {(uint8_t)speed};
     ret += this->writeReg(MAINBOARD_ADDR, SERVO_REG+2+id, data, 1);
-    return ret;
-}
-
-int s4s_mainBoard::gyro_enable(uint8_t enable)
-{
-    int ret = 0;
-    uint8_t data[] = {enable};
-    ret += this->writeReg(MAINBOARD_ADDR, GYROSCOPE_REG+0, data, 1);
-    return ret;
-}
-
-int s4s_mainBoard::gyro_set_state(uint8_t state)
-{
-    int ret = 0;
-    uint8_t data[] = {state};
-    ret += this->writeReg(MAINBOARD_ADDR, GYROSCOPE_REG+1, data, 1);
-    return ret;
-}
-
-int s4s_mainBoard::gyro_get_state(uint8_t * state)
-{
-    int ret = 0;
-    uint8_t data = 0;
-    ret += this->readReg(MAINBOARD_ADDR, GYROSCOPE_REG+1, &data, 1);
-    POINTER_SPACE_COPY(uint8_t, state, &data, 1);
-    return ret;
-}
-
-int s4s_mainBoard::gyro_get_acc(int16_t * accX, int16_t * accY, int16_t * accZ)
-{
-    int ret = 0;
-    uint8_t data[6] = {0};
-    ret += this->readReg(MAINBOARD_ADDR, GYROSCOPE_REG+2, data, 6);
-    if (accX)
-    {
-        *accX = (int16_t)((data[0] << 8) | data[1]);
-    }
-    if (accY)
-    {
-        *accY = (int16_t)((data[2] << 8) | data[3]);
-    }
-    if (accZ)
-    {
-        *accZ = (int16_t)((data[4] << 8) | data[5]);
-    }
-    return ret;
-}
-
-int s4s_mainBoard::gyro_get_gyro(int16_t * gyroX, int16_t * gyroY, int16_t * gyroZ)
-{
-    int ret = 0;
-    uint8_t data[6] = {0};
-    ret += this->readReg(MAINBOARD_ADDR, GYROSCOPE_REG+3, data, 6);
-    if (gyroX)
-    {
-        *gyroX = (int16_t)((data[0] << 8) | data[1]);
-    }
-    if (gyroY)
-    {
-        *gyroY = (int16_t)((data[2] << 8) | data[3]);
-    }
-    if (gyroZ)
-    {
-        *gyroZ = (int16_t)((data[4] << 8) | data[5]);
-    }
-    return ret;
-}
-
-int s4s_mainBoard::gyro_get_angle(int16_t * angleX, int16_t * angleY, int16_t * angleZ)
-{
-    int ret = 0;
-    uint8_t data[6] = {0};
-    ret += this->readReg(MAINBOARD_ADDR, GYROSCOPE_REG+4, data, 6);
-    if (angleX)
-    {
-        *angleX = (int16_t)((data[0] << 8) | data[1]);
-    }
-    if (angleY)
-    {
-        *angleY = (int16_t)((data[2] << 8) | data[3]);
-    }
-    if (angleZ)
-    {
-        *angleZ = (int16_t)((data[4] << 8) | data[5]);
-    }
     return ret;
 }
 
