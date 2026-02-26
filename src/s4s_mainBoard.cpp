@@ -164,7 +164,7 @@ s4s_mainBoard::~s4s_mainBoard()
 int s4s_mainBoard::power_get_internal_battery_level(uint8_t * level)
 {
     int ret = 0;
-    ret += this->writeReg(MAINBOARD_ADDR, CHARGING_REG + 0, level, 1);
+    ret += this->readReg(MAINBOARD_ADDR, CHARGING_REG + 0, level, 1);
     return ret;
 }
 
