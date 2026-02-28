@@ -13,12 +13,12 @@
     } while (0)
 
 static const uint8_t CHARGING_REG           = 0x00; // Charging Management 充电管理
-static const uint8_t AMBIENT_LIGHT_REG      = 0x05; // Ambient light 氛围灯
-static const uint8_t RTC_REG                = 0x0A; // RTC 
-static const uint8_t SERVO_REG              = 0x0F; // Servo 舵机
-static const uint8_t VOICE_REG              = 0x14; // Voice Module 语音模块
-static const uint8_t ENCODER_MOTOR_REG[]    = {0x50, 0x5F, 0x6E, 0x7D}; // Encoder motor 编码电机
-static const uint8_t ENCODER_MOTOR_PAIR_REG = 0x8C; // Encoder motor pair 编码电机对
+static const uint8_t AMBIENT_LIGHT_REG      = 0x0A; // Ambient light 氛围灯
+static const uint8_t RTC_REG                = 0x14; // RTC 
+static const uint8_t SERVO_REG              = 0x1E; // Servo 舵机
+static const uint8_t VOICE_REG              = 0x28; // Voice Module 语音模块
+static const uint8_t ENCODER_MOTOR_REG[]    = {0x50, 0x6E, 0x8C, 0xAA}; // Encoder motor 编码电机
+static const uint8_t ENCODER_MOTOR_PAIR_REG = 0xC8; // Encoder motor pair 编码电机对
 
 
 /*******************
