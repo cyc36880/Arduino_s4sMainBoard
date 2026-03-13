@@ -531,27 +531,27 @@ void s4s_mainBoard::gray_clearColor(void)
 void s4s_mainBoard::gray_getGrayData(uint8_t data[4])
 {
     uint8_t _data[1] = {2};
-    this->writeData(GYRO_ADDR, data, sizeof(_data));
+    this->writeData(GYRO_ADDR, _data, sizeof(_data));
     this->readData(GYRO_ADDR, data, 4);
 }
 
 void s4s_mainBoard::gray_getColorData(uint8_t data[4])
 {
     uint8_t _data[1] = {1};
-    this->writeData(GYRO_ADDR, data, sizeof(_data));
+    this->writeData(GYRO_ADDR, _data, sizeof(_data));
     this->readData(GYRO_ADDR, data, 4);
 }
 
 void s4s_mainBoard::gray_getBlack(uint8_t data[4])
 {
     uint8_t _data[1] = {3};
-    this->writeData(GYRO_ADDR, data, sizeof(_data));
+    this->writeData(GYRO_ADDR, _data, sizeof(_data));
     this->readData(GYRO_ADDR, data, 4);
 }
 
 void s4s_mainBoard::gray_getPhotosensitive(uint8_t data[4])
 {
     uint8_t _data[1] = {15};
-    this->writeData(GYRO_ADDR, data, sizeof(_data));
+    this->writeData(GYRO_ADDR, _data, sizeof(_data));
     this->readData(GYRO_ADDR, data, 4);
 }
