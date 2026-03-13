@@ -291,7 +291,7 @@ int s4s_mainBoard::encoder_motor_get_angle(uint8_t id, int32_t * angle)
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_get_speed(uint8_t id, int16_t * speed)
+int s4s_mainBoard::encoder_motor_get_rpm_speed(uint8_t id, int16_t * speed)
 {
     int ret = 0;
     uint8_t data[2] = {0};
@@ -303,11 +303,23 @@ int s4s_mainBoard::encoder_motor_get_speed(uint8_t id, int16_t * speed)
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_get_power(uint8_t id, uint16_t * power)
+int s4s_mainBoard::encoder_motor_get_dynamic_speed(uint8_t id, int16_t * speed)
 {
     int ret = 0;
     uint8_t data[2] = {0};
     ret = this->readReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 2, data, 2);
+    if (speed)
+    {
+        *speed = (int16_t)(((uint16_t)data[0] << 8) | data[1]);
+    }
+    return ret;
+}
+
+int s4s_mainBoard::encoder_motor_get_power(uint8_t id, uint16_t * power)
+{
+    int ret = 0;
+    uint8_t data[2] = {0};
+    ret = this->readReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 3, data, 2);
     if (power)
     {
         *power = (uint16_t)(((uint16_t)data[0] << 8) | data[1]);
@@ -326,24 +338,34 @@ int s4s_mainBoard::encoder_motor_reset_angle(uint8_t id)
 int s4s_mainBoard::encoder_motor_set_action(uint8_t id, uint8_t action)
 {
     int ret = 0;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 3, &action, 1);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 4, &action, 1);
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_set_speed(uint8_t id, uint16_t speed)
+int s4s_mainBoard::encoder_motor_set_rpm_speed(uint8_t id, uint16_t speed)
 {
     int ret = 0;
     uint8_t data[2] = {0};
     data[0] = (speed >> 8) & 0xFF;
     data[1] = speed & 0xFF;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 4, data, 2);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 5, data, 2);
+    return ret;
+}
+
+int s4s_mainBoard::encoder_motor_set_dynamic_speed(uint8_t id, uint16_t speed)
+{
+    int ret = 0;
+    uint8_t data[2] = {0};
+    data[0] = (speed >> 8) & 0xFF;
+    data[1] = speed & 0xFF;
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 6, data, 2);
     return ret;
 }
 
 int s4s_mainBoard::encoder_motor_set_power(uint8_t id, uint8_t power)
 {
     int ret = 0;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 5, &power, 1);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 7, &power, 1);
     return ret;
 }
 
@@ -353,7 +375,7 @@ int s4s_mainBoard::encoder_motor_set_ring(uint8_t id, uint16_t ring)
     uint8_t data[2];
     data[0] = (ring >> 8) & 0xFF;
     data[1] = ring & 0xFF;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 6, data, 2);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 8, data, 2);
     return ret;
 }
 
@@ -363,17 +385,27 @@ int s4s_mainBoard::encoder_motor_set_relative_angle(uint8_t id, uint16_t relativ
     uint8_t data[2];
     data[0] = (relativeAngle >> 8) & 0xFF;
     data[1] = relativeAngle & 0xFF;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 7, data, 2);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 9, data, 2);
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_set_run_time(uint8_t id, uint16_t runTime)
+int s4s_mainBoard::encoder_motor_set_time(uint8_t id, uint16_t runTime)
 {
     int ret = 0;
     uint8_t data[2];
     data[0] = (runTime >> 8) & 0xFF;
     data[1] = runTime & 0xFF;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 8, data, 2);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 10, data, 2);
+    return ret;
+}
+
+int s4s_mainBoard::encoder_motor_set_centimeter(uint8_t id, uint16_t centimeter)
+{
+    int ret = 0;
+    uint8_t data[2];
+    data[0] = (centimeter >> 8) & 0xFF;
+    data[1] = centimeter & 0xFF;
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 11, data, 2);
     return ret;
 }
 
@@ -394,7 +426,7 @@ int s4s_mainBoard::encoder_motor_pair_set_group(uint8_t l_id, uint8_t r_id)
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_pair_set_run_speed(uint16_t l_speed, uint16_t r_speed)
+int s4s_mainBoard::encoder_motor_pair_set_speed(uint16_t l_speed, uint16_t r_speed)
 {
     int ret = 0;
     uint8_t data[4] = {0};
@@ -406,17 +438,39 @@ int s4s_mainBoard::encoder_motor_pair_set_run_speed(uint16_t l_speed, uint16_t r
     return ret;
 }
 
-int s4s_mainBoard::enmcoder_motor_pair_set_run_time(uint16_t runTime)
+int s4s_mainBoard::enmcoder_motor_pair_set_time(uint16_t runTime)
 {
     int ret = 0;
     uint8_t data[2] = {0};
     data[0] = (uint8_t)(runTime >> 8) & 0xFF;
     data[1] = (uint8_t)(runTime) & 0xFF;
-    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_PAIR_REG + 4, data, 2);
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_PAIR_REG + 3, data, 2);
     return ret;
 }
 
+int s4s_mainBoard::enmcoder_motor_pair_set_ring(uint16_t ring)
+{
+    int ret = 0;
+    uint8_t data[4] = {0};
+    data[0] = (uint8_t)(ring >> 8) & 0xFF;
+    data[1] = (uint8_t)(ring) & 0xFF;
+    data[2] = (uint8_t)(ring >> 8) & 0xFF;
+    data[3] = (uint8_t)(ring) & 0xFF;
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_PAIR_REG + 4, data, 4);
+    return ret;
+}
 
+int s4s_mainBoard::enmcoder_motor_pair_set_centimeter(uint16_t centimeter)
+{
+    int ret = 0;
+    uint8_t data[4] = {0};
+    data[0] = (uint8_t)(centimeter >> 8) & 0xFF;
+    data[1] = (uint8_t)(centimeter) & 0xFF;
+    data[2] = (uint8_t)(centimeter >> 8) & 0xFF;
+    data[3] = (uint8_t)(centimeter) & 0xFF;
+    ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_PAIR_REG + 5, data, 4);
+    return ret;
+}
 
 uint16_t s4s_mainBoard::ultr_get_distance(void)
 {

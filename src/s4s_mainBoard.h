@@ -129,12 +129,20 @@ public:
      */    
     int encoder_motor_get_angle(uint8_t id, int32_t * angle);
     /**
-     * @description: Get the speed of the encoded motor
+     * @description: Get the rpm speed of the encoded motor
      * @param id  Encoder motor ID 0 ~ 3
      * @param speed Speed
      * @return int 0: success, other: fail
      */    
-    int encoder_motor_get_speed(uint8_t id, int16_t * speed);
+    int encoder_motor_get_rpm_speed(uint8_t id, int16_t * speed);
+
+    /**
+     * @description: Get the dynamic speed of the encoded motor
+     * @param id  Encoder motor ID 0 ~ 3
+     * @param speed Speed
+     * @return int 0: success, other: fail
+     */   
+    int encoder_motor_get_dynamic_speed(uint8_t id, int16_t * speed);
     /**
      * @description: Get the current power of the encoded motor
      * @param id  Encoder motor ID 0 ~ 3
@@ -163,12 +171,19 @@ public:
      */    
     int encoder_motor_set_action(uint8_t id, uint8_t action);
     /**
-     * @description: Set the motion speed of the encoder motor
+     * @description: Set the motion rpm speed of the encoder motor
      * @param id  Encoder motor ID 0 ~ 3
-     * @param speed Speed
+     * @param speed Speed 0 ~ (100 ~ 180)
      * @return int 0: success, other: fail
      */    
-    int encoder_motor_set_speed(uint8_t id, uint16_t speed);
+    int encoder_motor_set_rpm_speed(uint8_t id, uint16_t speed);
+    /**
+     * @description: Set the motion dynamic speed of the encoder motor
+     * @param id  Encoder motor ID 0 ~ 3
+     * @param speed Speed 0 ~100
+     * @return int 0: success, other: fail
+     */
+    int encoder_motor_set_dynamic_speed(uint8_t id, uint16_t speed);
     /**
      * @description: Set the power of the encoder motor
      * @param id  Encoder motor ID 0 ~ 3
@@ -196,9 +211,14 @@ public:
      * @param runTime Running duration, The unit is seconds
      * @return int 0: success, other: fail
      */
-    int encoder_motor_set_run_time(uint8_t id, uint16_t runTime);
-
-
+    int encoder_motor_set_time(uint8_t id, uint16_t runTime);
+    /**
+     * @description: Set the operating distance of the encoder motor
+     * @param id  Encoder motor ID 0 ~ 3
+     * @param centimeter Running distance
+     * @return int 0: success, other: fail
+     */
+    int s4s_mainBoard::encoder_motor_set_centimeter(uint8_t id, uint16_t centimeter);
     /**
      * @description: Set the motion commands for the encoded motor
      * @param action Command
@@ -222,13 +242,25 @@ public:
      * @param r_speed Right motor speed
      * @return int 0: success, other: fail
      */    
-    int encoder_motor_pair_set_run_speed(uint16_t l_speed, uint16_t r_speed);
+    int encoder_motor_pair_set_speed(uint16_t l_speed, uint16_t r_speed);
     /**
      * @description: Set motor for motion time
      * @param runTime Running time 0 ~ 65535, unit: ms
      * @return int 0: success, other: fail
      */    
-    int enmcoder_motor_pair_set_run_time(uint16_t runTime);
+    int enmcoder_motor_pair_set_time(uint16_t runTime);
+    /**
+     * @description: Set the number of running laps
+     * @param ring 
+     * @return int 0: success, other: fail
+     */  
+    int enmcoder_motor_pair_set_ring(uint16_t ring);
+    /**
+     * @description: Set running distance
+     * @param centimeters  unit: cm
+     * @return int 0: success, other: fail
+     */  
+    int enmcoder_motor_pair_set_centimeter(uint16_t centimeters);
 
 
     /**
