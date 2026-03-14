@@ -474,17 +474,30 @@ int s4s_mainBoard::enmcoder_motor_pair_set_centimeter(uint16_t centimeter)
 
 uint16_t s4s_mainBoard::ultr_get_distance(void)
 {
-    delay(50);
     uint8_t data[3] = {0};
     uint32_t distance = 0;
+    // The two IIC operations must be at least 50ms apart.
+    if (millis() - this->ultr_getDistance_last_tick < 50)
+    {
+        return this->ultr_last_distance;
+    }
+    this->ultr_getDistance_last_tick = millis();
+
     this->readReg(ULTR_ADDR, 0x01, data, 3);
     distance =  ((uint32_t)data[0])<<16  | ((uint32_t)data[1])<<8 | ((uint32_t)data[0])<<0;
-    return distance/10000;
+    this->ultr_last_distance = distance / 10000;
+    return this->ultr_last_distance;
 } 
 
 void s4s_mainBoard::ultr_set_color(uint8_t light, uint8_t color[3])
 {
-    delay(50);
+    // The two IIC operations must be at least 50ms apart.
+    if (millis() - this->ultr_setColor_last_tick < 50)
+    {
+        return;
+    }
+    this->ultr_setColor_last_tick = millis();
+
     uint8_t data[4] = {0};
     data[0] = light;
     data[1] = color[0];
@@ -516,7 +529,7 @@ void s4s_mainBoard::gray_binaryStudy(void)
 
 void s4s_mainBoard::gray_colorStudy(enum COLOR_TYPE colorType)
 {
-    uint8_t data[1] = {(uint8_t)colorType + 6};
+    uint8_t data[1] = { static_cast<uint8_t>(colorType + 6) };
     this->writeData(GYRO_ADDR, data, sizeof(data));
     delay(100);
 }

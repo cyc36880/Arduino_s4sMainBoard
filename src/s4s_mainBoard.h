@@ -218,7 +218,7 @@ public:
      * @param centimeter Running distance
      * @return int 0: success, other: fail
      */
-    int s4s_mainBoard::encoder_motor_set_centimeter(uint8_t id, uint16_t centimeter);
+    int encoder_motor_set_centimeter(uint8_t id, uint16_t centimeter);
     /**
      * @description: Set the motion commands for the encoded motor
      * @param action Command
@@ -293,4 +293,7 @@ private:
     const uint8_t GYRO_ADDR = 0x6F;
     TwoWire *_wire  = NULL;
     TwoWire *_wire2 = NULL;
+    uint16_t ultr_last_distance = 0;
+    uint32_t ultr_getDistance_last_tick = 0;
+    uint32_t ultr_setColor_last_tick = 0;
 };
