@@ -162,11 +162,13 @@ public:
      * @param action Command
      *  @note 
      *      0:stop
-     *      speed : 1:forward 2:backward
-     *      power : 3:forward 4:backward
-     *      ring  : 5:forward 6:backward
-     *      angle : 7:forward 8:backward
-     *      second: 9:forward 10:backward
+     *      rpmSpeed     : 1:forward  2:backward
+     *      dynamicSpeed : 3:forward  4:backward
+     *      power        : 5:forward  6:backward
+     *      ring         : 7:forward  8:backward
+     *      angle        : 9:forward  10:backward
+     *      second       : 11:forward 12:backward
+     *      centimeter   : 13:forward 14:backward
      * @return int 0: success, other: fail
      */    
     int encoder_motor_set_action(uint8_t id, uint8_t action);
@@ -224,8 +226,10 @@ public:
      * @param action Command
      * @note 
      *      0:stop
-     *      speed : 1:forward 2:backward 3:turn left 4:turn right
-     *      second: 5:forward 6:backward 7:turn left 8:turn right
+     *      speed     : 1 :forward 2:backward   3 :turn left 4:turn right
+     *      second    : 5 :forward 6:backward   7 :turn left 8:turn right
+     *      ring      : 9 :forward 10:backward  11:turn left 12:turn right
+     *      centimeter: 13:forward 14:backward  15:turn left 16:turn right
      * @return int 0: success, other: fail
      */    
     int encoder_motor_pair_set_action(uint8_t action);
