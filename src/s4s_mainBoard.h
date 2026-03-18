@@ -246,25 +246,25 @@ public:
      * @param r_speed Right motor speed
      * @return int 0: success, other: fail
      */    
-    int encoder_motor_pair_set_speed(uint16_t l_speed, uint16_t r_speed);
+    int encoder_motor_pair_set_dynamic_speed(uint16_t l_speed, uint16_t r_speed);
     /**
      * @description: Set motor for motion time
      * @param runTime Running time 0 ~ 65535, unit: ms
      * @return int 0: success, other: fail
      */    
-    int enmcoder_motor_pair_set_time(uint16_t runTime);
+    int encoder_motor_pair_set_time(uint16_t runTime);
     /**
      * @description: Set the number of running laps
      * @param ring 
      * @return int 0: success, other: fail
      */  
-    int enmcoder_motor_pair_set_ring(uint16_t ring);
+    int encoder_motor_pair_set_ring(uint16_t ring);
     /**
      * @description: Set running distance
      * @param centimeters  unit: cm
      * @return int 0: success, other: fail
      */  
-    int enmcoder_motor_pair_set_centimeter(uint16_t centimeters);
+    int encoder_motor_pair_set_centimeter(uint16_t centimeters);
 
 
     /**

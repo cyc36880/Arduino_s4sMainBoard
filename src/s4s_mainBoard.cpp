@@ -1,5 +1,6 @@
 #include "s4s_mainBoard.h"
 #include <string.h>
+#include "math.h"
 
 /*******************
  * static variable
@@ -426,10 +427,12 @@ int s4s_mainBoard::encoder_motor_pair_set_group(uint8_t l_id, uint8_t r_id)
     return ret;
 }
 
-int s4s_mainBoard::encoder_motor_pair_set_speed(uint16_t l_speed, uint16_t r_speed)
+int s4s_mainBoard::encoder_motor_pair_set_dynamic_speed(uint16_t l_speed, uint16_t r_speed)
 {
     int ret = 0;
     uint8_t data[4] = {0};
+    l_speed = max(0, min(100, l_speed));
+    r_speed = max(0, min(100, r_speed));
     data[0] = (uint8_t)(l_speed >> 8) & 0xFF;
     data[1] = (uint8_t)(l_speed) & 0xFF;
     data[2] = (uint8_t)(r_speed >> 8) & 0xFF;
@@ -438,7 +441,7 @@ int s4s_mainBoard::encoder_motor_pair_set_speed(uint16_t l_speed, uint16_t r_spe
     return ret;
 }
 
-int s4s_mainBoard::enmcoder_motor_pair_set_time(uint16_t runTime)
+int s4s_mainBoard::encoder_motor_pair_set_time(uint16_t runTime)
 {
     int ret = 0;
     uint8_t data[2] = {0};
@@ -448,7 +451,7 @@ int s4s_mainBoard::enmcoder_motor_pair_set_time(uint16_t runTime)
     return ret;
 }
 
-int s4s_mainBoard::enmcoder_motor_pair_set_ring(uint16_t ring)
+int s4s_mainBoard::encoder_motor_pair_set_ring(uint16_t ring)
 {
     int ret = 0;
     uint8_t data[4] = {0};
@@ -460,7 +463,7 @@ int s4s_mainBoard::enmcoder_motor_pair_set_ring(uint16_t ring)
     return ret;
 }
 
-int s4s_mainBoard::enmcoder_motor_pair_set_centimeter(uint16_t centimeter)
+int s4s_mainBoard::encoder_motor_pair_set_centimeter(uint16_t centimeter)
 {
     int ret = 0;
     uint8_t data[4] = {0};
