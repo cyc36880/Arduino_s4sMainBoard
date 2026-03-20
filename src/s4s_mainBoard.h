@@ -77,7 +77,12 @@ public:
      * @return int 0: success, other: fail
      */
     int power_is_fully_charged(uint8_t * isFullyCharged);
-
+    /**
+     * @description: Get main board version
+     * @param version Version array [major, minor, patch]
+     * @return int 0: success, other: fail
+     */    
+    int version_get(uint8_t version[3]);
     /**
     * @description: Set the ambient light status
     * @param light Brightness 0 ~ 255; -1 means do not change

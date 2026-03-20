@@ -192,6 +192,13 @@ int s4s_mainBoard::power_is_fully_charged(uint8_t * isFullyCharged)
     return ret;
 }
 
+int s4s_mainBoard::version_get(uint8_t version[3])
+{
+    int ret = 0;
+    ret += this->readReg(MAINBOARD_ADDR, CHARGING_REG + 4, version, 3);
+    return ret;
+}
+
 int s4s_mainBoard::ambient_light_set_state(int light, uint8_t color[3])
 {
     int ret = 0;
