@@ -227,6 +227,13 @@ public:
      */
     int encoder_motor_set_centimeter(uint8_t id, uint16_t centimeter);
     /**
+     * @description: Get the execution status of the command
+     * @param id  Encoder motor ID 0 ~ 3
+     * @param running 0:stop 1:running
+     * @return int 0: success, other: fail
+     */    
+    int encoder_motor_get_action_runing(uint8_t id, uint8_t * running);
+    /**
      * @description: Set the motion commands for the encoded motor
      * @param action Command
      * @note 
@@ -270,7 +277,12 @@ public:
      * @return int 0: success, other: fail
      */  
     int encoder_motor_pair_set_centimeter(uint16_t centimeters);
-
+    /**
+     * @description: Get the execution status of the command
+     * @param running 0:stop 1:running
+     * @return int 0: success, other: fail
+     */    
+    int encoder_motor_pair_get_action_runing(uint8_t * running);
 
     /**
      * @description: Get the distance of the ultrasonic wave

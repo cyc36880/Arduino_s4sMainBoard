@@ -1,6 +1,6 @@
 #include "s4s_mainBoard.h"
 #include <string.h>
-#include "math.h"
+
 
 /*******************
  * static variable
@@ -12,6 +12,9 @@
             break;                              \
         memcpy(dst, src, len * sizeof(type));   \
     } while (0)
+
+#define DATA_MAX(a, b) ((a) > (b) ? (a) : (b))
+#define DATA_MIN(a, b) ((a) < (b) ? (a) : (b))
 
 static const uint8_t CHARGING_REG           = 0x00; // Charging Management 充电管理
 static const uint8_t AMBIENT_LIGHT_REG      = 0x0A; // Ambient light 氛围灯
@@ -417,6 +420,13 @@ int s4s_mainBoard::encoder_motor_set_centimeter(uint8_t id, uint16_t centimeter)
     return ret;
 }
 
+int s4s_mainBoard::encoder_motor_get_action_runing(uint8_t id, uint8_t * running)
+{
+    int ret = 0;
+    ret += this->readReg(MAINBOARD_ADDR, ENCODER_MOTOR_REG[id] + 12, running, 1);
+    return ret;
+}
+
 int s4s_mainBoard::encoder_motor_pair_set_action(uint8_t action)
 {
     int ret = 0;
@@ -438,8 +448,8 @@ int s4s_mainBoard::encoder_motor_pair_set_dynamic_speed(uint16_t l_speed, uint16
 {
     int ret = 0;
     uint8_t data[4] = {0};
-    l_speed = max(0, min(100, l_speed));
-    r_speed = max(0, min(100, r_speed));
+    l_speed = DATA_MAX(0, DATA_MIN(100, l_speed));
+    r_speed = DATA_MAX(0, DATA_MIN(100, r_speed));
     data[0] = (uint8_t)(l_speed >> 8) & 0xFF;
     data[1] = (uint8_t)(l_speed) & 0xFF;
     data[2] = (uint8_t)(r_speed >> 8) & 0xFF;
@@ -479,6 +489,13 @@ int s4s_mainBoard::encoder_motor_pair_set_centimeter(uint16_t centimeter)
     data[2] = (uint8_t)(centimeter >> 8) & 0xFF;
     data[3] = (uint8_t)(centimeter) & 0xFF;
     ret += this->writeReg(MAINBOARD_ADDR, ENCODER_MOTOR_PAIR_REG + 5, data, 4);
+    return ret;
+}
+
+int s4s_mainBoard::encoder_motor_pair_get_action_runing(uint8_t * running)
+{
+    int ret = 0;
+    ret += this->readReg(MAINBOARD_ADDR, ENCODER_MOTOR_PAIR_REG + 6, running, 1);
     return ret;
 }
 
