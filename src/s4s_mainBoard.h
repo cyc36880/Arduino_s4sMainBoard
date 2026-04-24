@@ -120,6 +120,13 @@ public:
     int continuous_servo_set_speed(uint8_t id, int8_t speed);
 
     /**
+     * @description: Release the servo
+     * @param id Servo ID 0 ~ 1
+     * @return int 0: success, other: fail
+     */    
+    int servo_release(uint8_t id);
+
+    /**
      * @description: Get voice commands
      * @return {*}
      */    

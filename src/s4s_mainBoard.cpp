@@ -282,6 +282,16 @@ int s4s_mainBoard::continuous_servo_set_speed(uint8_t id, int8_t speed)
     return ret;
 }
 
+int s4s_mainBoard::servo_release(uint8_t id)
+{
+    if (id > 1) return -1;
+
+    int ret = 0;
+    uint8_t data[] = {0};
+    ret += this->writeReg(MAINBOARD_ADDR, SERVO_REG+4+id, data, 1);
+    return ret;
+}
+
 uint8_t s4s_mainBoard::voice_get_state(void)
 {
     uint8_t data = 0;
