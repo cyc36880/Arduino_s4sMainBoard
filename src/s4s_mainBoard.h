@@ -309,11 +309,11 @@ public:
     void gray_getPhotosensitive(uint8_t data[4]);
 
 protected:
-    virtual uint8_t writeData(uint8_t dev_addr, uint8_t *data, uint16_t len);
-    virtual uint8_t readData(uint8_t dev_addr, uint8_t *data, uint16_t len);
-    virtual uint8_t writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
-    virtual uint8_t readReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
-    virtual uint8_t isOnline(uint8_t dev_addr);
+    virtual int writeData(uint8_t dev_addr, uint8_t *data, uint16_t len);
+    virtual int readData(uint8_t dev_addr, uint8_t *data, uint16_t len);
+    virtual int writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
+    virtual int readReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len);
+    virtual int isOnline(uint8_t dev_addr);
 
 private:
     const uint8_t MAINBOARD_ADDR = 0x0F;

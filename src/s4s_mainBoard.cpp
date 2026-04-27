@@ -28,10 +28,10 @@ static const uint8_t ENCODER_MOTOR_PAIR_REG = 0xC8; // Encoder motor pair 编码
 /*******************
  * static function
  ******************/
-static uint8_t writeData(TwoWire *wire, uint8_t dev_addr, uint8_t *data, uint16_t len)
+static int writeData(TwoWire *wire, uint8_t dev_addr, uint8_t *data, uint16_t len)
 {
     if (NULL == wire)
-        return 1;
+        return -1;
     wire->beginTransmission(dev_addr);
     while (len--)
     {
@@ -42,10 +42,10 @@ static uint8_t writeData(TwoWire *wire, uint8_t dev_addr, uint8_t *data, uint16_
     return 0;
 }
 
-static uint8_t readData(TwoWire *wire, uint8_t dev_addr, uint8_t *data, uint16_t len)
+static int readData(TwoWire *wire, uint8_t dev_addr, uint8_t *data, uint16_t len)
 {
     if (NULL == wire)
-        return 1;
+        return -1;
     wire->requestFrom((uint8_t)dev_addr, (uint8_t)len);
     while (wire->available())
     {
@@ -55,10 +55,10 @@ static uint8_t readData(TwoWire *wire, uint8_t dev_addr, uint8_t *data, uint16_t
     return 0;
 }
 
-static uint8_t writeReg(TwoWire *wire, uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
+static int writeReg(TwoWire *wire, uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
 {
     if (NULL == wire)
-        return 1;
+        return -1;
     wire->beginTransmission(dev_addr);
     wire->write(reg);
     while (len--)
@@ -70,10 +70,10 @@ static uint8_t writeReg(TwoWire *wire, uint8_t dev_addr, uint8_t reg, uint8_t *d
     return 0;
 }
 
-static uint8_t readReg(TwoWire *wire, uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
+static int readReg(TwoWire *wire, uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
 {
     if (NULL == wire)
-        return 1;
+        return -1;
     wire->beginTransmission(dev_addr);
     wire->write(reg);
     wire->endTransmission(false);
@@ -89,7 +89,7 @@ static uint8_t readReg(TwoWire *wire, uint8_t dev_addr, uint8_t reg, uint8_t *da
 }
 
 // 0:online, otherwise offline
-static uint8_t isOnline(TwoWire *wire, uint8_t dev_addr)
+static int isOnline(TwoWire *wire, uint8_t dev_addr)
 {
     if (NULL == wire)
         return 0xFF;
@@ -101,7 +101,7 @@ static uint8_t isOnline(TwoWire *wire, uint8_t dev_addr)
 /************************
  * class protected
  ************************/
-uint8_t s4s_mainBoard::writeData(uint8_t dev_addr, uint8_t *data, uint16_t len)
+int s4s_mainBoard::writeData(uint8_t dev_addr, uint8_t *data, uint16_t len)
 {
     TwoWire * wire = this->_wire;
     if (MAINBOARD_ADDR != dev_addr && NULL != _wire2)
@@ -111,7 +111,7 @@ uint8_t s4s_mainBoard::writeData(uint8_t dev_addr, uint8_t *data, uint16_t len)
     return ::writeData(wire, dev_addr, data, len);
 }
 
-uint8_t s4s_mainBoard::readData(uint8_t dev_addr, uint8_t *data, uint16_t len)
+int s4s_mainBoard::readData(uint8_t dev_addr, uint8_t *data, uint16_t len)
 {
     TwoWire * wire = this->_wire;
     if (MAINBOARD_ADDR != dev_addr && NULL != _wire2)
@@ -121,7 +121,7 @@ uint8_t s4s_mainBoard::readData(uint8_t dev_addr, uint8_t *data, uint16_t len)
     return ::readData(wire, dev_addr, data, len);
 }
 
-uint8_t s4s_mainBoard::writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
+int s4s_mainBoard::writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
 {
     TwoWire * wire = this->_wire;
     if (MAINBOARD_ADDR != dev_addr && NULL != _wire2)
@@ -131,7 +131,7 @@ uint8_t s4s_mainBoard::writeReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, ui
     return ::writeReg(wire, dev_addr, reg, data, len);
 }
 
-uint8_t s4s_mainBoard::readReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
+int s4s_mainBoard::readReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uint16_t len)
 {
     TwoWire * wire = this->_wire;
     if (MAINBOARD_ADDR != dev_addr && NULL != _wire2)
@@ -141,7 +141,7 @@ uint8_t s4s_mainBoard::readReg(uint8_t dev_addr, uint8_t reg, uint8_t *data, uin
     return ::readReg(wire, dev_addr, reg, data, len);
 }
 
-uint8_t s4s_mainBoard::isOnline(uint8_t dev_addr)
+int s4s_mainBoard::isOnline(uint8_t dev_addr)
 {
     TwoWire * wire = this->_wire;
     if (MAINBOARD_ADDR != dev_addr && NULL != _wire2)
