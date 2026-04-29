@@ -223,7 +223,7 @@ int s4s_mainBoard::ambient_light_set_state(int light, uint8_t r, uint8_t g, uint
     return this->ambient_light_set_state(light, data);
 }
 
-int s4s_mainBoard::rtc_set_data(uint8_t year, uint8_t month, uint8_t day)
+int s4s_mainBoard::rtc_set_date(uint8_t year, uint8_t month, uint8_t day)
 {
     int ret = 0;
     uint8_t data[] = {0/*week*/, month, day, year};

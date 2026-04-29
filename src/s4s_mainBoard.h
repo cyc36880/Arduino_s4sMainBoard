@@ -99,7 +99,7 @@ public:
     * @param day Day 1 ~ 31
     * @return int 0: success, other: fail
     */
-    int rtc_set_data(uint8_t year, uint8_t month, uint8_t day);
+    int rtc_set_date(uint8_t year, uint8_t month, uint8_t day);
     int rtc_set_time(uint8_t hour, uint8_t minute, uint8_t second);
     int rtc_get_data(uint8_t * year, uint8_t * month, uint8_t * day, uint8_t * week);
     int rtc_get_time(uint8_t * hour, uint8_t * minute, uint8_t * second);
