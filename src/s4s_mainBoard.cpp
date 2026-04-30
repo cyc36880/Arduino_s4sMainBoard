@@ -300,6 +300,15 @@ uint8_t s4s_mainBoard::voice_get_state(void)
     return data;
 }
 
+int s4s_mainBoard::voice_get_version(uint8_t version[3])
+{
+    if (NULL == version) return -1;
+
+    int ret = 0;
+    ret += this->readReg(MAINBOARD_ADDR, VOICE_REG+1, version, 3);
+    return ret;
+}
+
 int s4s_mainBoard::encoder_motor_get_angle(uint8_t id, int32_t * angle)
 {
     int ret = 0;

@@ -131,6 +131,11 @@ public:
      * @return {*}
      */    
     uint8_t voice_get_state(void);
+    /**
+     * @description: Get voice version
+     * @return 0: success, other: fail
+     */    
+    int voice_get_version(uint8_t version[3]);
 
 
     /**
