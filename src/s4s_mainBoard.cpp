@@ -292,12 +292,13 @@ int s4s_mainBoard::servo_release(uint8_t id)
     return ret;
 }
 
-uint8_t s4s_mainBoard::voice_get_state(void)
+int s4s_mainBoard::voice_get_state(uint8_t * state)
 {
-    uint8_t data = 0;
-    delay(50);
-    this->readReg(MAINBOARD_ADDR, VOICE_REG, &data, 1);
-    return data;
+    if (NULL == state) return -1;
+
+    int ret = 0;
+    ret = this->readReg(MAINBOARD_ADDR, VOICE_REG, state, 1);
+    return ret;
 }
 
 int s4s_mainBoard::voice_get_version(uint8_t version[3])

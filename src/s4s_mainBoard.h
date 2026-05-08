@@ -130,7 +130,7 @@ public:
      * @description: Get voice commands
      * @return {*}
      */    
-    uint8_t voice_get_state(void);
+    int voice_get_state(uint8_t * state);
     /**
      * @description: Get voice version
      * @return 0: success, other: fail
